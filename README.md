@@ -13,10 +13,21 @@ Trabalho para a matéria de POO na faculdade sobre um sistema de academia
 
 # Organização:
 O projeto consiste em um sistema de gerenciamento dos clientes de uma academia. 
+
 Dicionários:
-- Clientes[nome]
+
+clientes[nome]
+
 Classes:
-- Treinos(tipo, séries_semanais)
-- Gold(mensalidade, pagamento, cliente)
-- Diamond(mensalidade, pagamento, cliente, restricao_alimentar) 
-- Netherite(mensalidade, pagamento, cliente, restricao_alimentar, genero_personal)
+
+Plano(mensalidade, data_vencimento)
+PlanoMensal(mensalidade, data_vencimento) — herda de Plano
+PlanoTrimestral(mensalidade, data_vencimento) — herda de Plano, 10% de desconto
+PlanoSemestral(mensalidade, data_vencimento) — herda de Plano, 15% de desconto
+PlanoAnual(mensalidade, data_vencimento) — herda de Plano, 20% de desconto
+FichaDeTreino(exercicios) — composta dentro de Aluno
+Aluno(nome, cpf, plano, ficha) — recebe Plano por agregação, cria FichaDeTreino por composição
+
+Polimorfismo:
+
+calcular_mensalidade() sobrescrito em cada subclasse de Plano
