@@ -16,18 +16,18 @@ O projeto consiste em um sistema de gerenciamento dos clientes de uma academia.
 
 Dicionários:
 
-clientes[nome]
+- clientes[nome]
 
 Classes:
 
-Plano(mensalidade, data_vencimento)
-PlanoMensal(mensalidade, data_vencimento) — herda de Plano
-PlanoTrimestral(mensalidade, data_vencimento) — herda de Plano, 10% de desconto
-PlanoSemestral(mensalidade, data_vencimento) — herda de Plano, 15% de desconto
-PlanoAnual(mensalidade, data_vencimento) — herda de Plano, 20% de desconto
-FichaDeTreino(exercicios) — composta dentro de Aluno
-Aluno(nome, cpf, plano, ficha) — recebe Plano por agregação, cria FichaDeTreino por composição
+- Plano(mensalidade, data_vencimento)
+- PlanoMensal(mensalidade, data_vencimento) — herda de Plano
+- PlanoTrimestral(mensalidade, data_vencimento) — herda de Plano, 10% de desconto
+- PlanoSemestral(mensalidade, data_vencimento) — herda de Plano, 15% de desconto
+- PlanoAnual(mensalidade, data_vencimento) — herda de Plano, 20% de desconto
+- FichaDeTreino(exercicios) — composta dentro de Aluno
+- Aluno(nome, cpf, plano, ficha) — recebe Plano por agregação, cria FichaDeTreino por composição
 
 Polimorfismo:
 
-calcular_mensalidade() sobrescrito em cada subclasse de Plano
+- calcular_mensalidade() sobrescrito em cada subclasse de Plano
