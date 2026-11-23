@@ -198,3 +198,4 @@ while(True):
 
         case _:
             print('\nOpção inválida!')
+            time.sleep(1.5)
