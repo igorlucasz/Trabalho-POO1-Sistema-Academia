@@ -1,4 +1,5 @@
-from datetime import ZoneInfo, datetime
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 class Aluno:
     def __init__(self, nome, cpf, plano):
@@ -118,9 +119,18 @@ def verifica_plano(x):
     else:
         return x
 
+def verifica_cpf(x):
+    if(x.isdigit()):
+        return int(x)
+
+    else:
+        nova_resposta = input('CPF inválido! Digite novamente: ')
+        return verifica_cpf(nova_resposta)
+
+
 clientes = {}
 mensalidade = 200
-data = datetime.now(ZoneInfo("America/Sao_Paulo")).date()
+data = str(datetime.now(ZoneInfo("America/Sao_Paulo")).date())
 
 while(True):
     print('\n-xxxxxxxxxxxxxxxxxxxxxx- Sistema Academia POO (Performance Orientada a Objetivos)  -xxxxxxxxxxxxxxxxxxxxxx-')
@@ -131,14 +141,14 @@ while(True):
     print('3) Verificar aluno')
     print('4) Alterar valor padrão da mensalidade')
 
-    opcao = int(input('\nDigite a opção desejada: '))
+    opcao = input('\nDigite a opção desejada: ')
 
     match opcao:
-        case 1:
+        case '1':
             print('\nDigite as informações necessárias')
-            nome = input('\nnome:')
-            cpf = int(input('CPF:'))
-            plano = verifica_plano(input('plano (mensal, trimestral, semestral, anual): '))
+            nome = input('\nnome: ')
+            cpf = verifica_cpf(input('CPF: '))
+            plano = verifica_plano(input('plano (mensal, trimestral, semestral, anual): ').lower())
 
             if(plano == 'm' or plano == 'mensal'):
                 plano = PlanoMensal(mensalidade, data)
@@ -156,21 +166,26 @@ while(True):
 
             print('\nAluno registrado!')
 
-        case 2:
-            print('\n')
+        case '2':
+            print('\nEdição da Planilha de Treino')
+            busca = verifica_cpf(input('Digite o CPF do aluno selecionado: '))
             
-        case 3:
+        case '3':
             print('\nBusca de informações do aluno por CPF')
-            busca = int(input('Digite o CPF do aluno: '))
+            busca = verifica_cpf(input('Digite o CPF do aluno: '))
             cliente = clientes.get(busca, 'erro')
 
             if(cliente != 'erro'):
                 print(f'\nNome: {cliente.get_nome()}')
                 print(f'Plano: {cliente.plano.get_plano()}')
+                print(f'Data de vencimento do plano: {cliente.plano.vencimento()}')
                 print(f'Ficha de treino: {cliente.ficha.ficha_treino()}')
 
-        case 4:
+            else:
+                print('\nAluno não cadastrado.')
+
+        case '4':
             print('\n')
         case _:
-            print('\nDesligando sistema')
+            print('\nDesligando sistema\n')
             break
