@@ -1,3 +1,5 @@
+from datetime import ZoneInfo, datetime
+
 class Aluno:
     def __init__(self, nome, cpf, plano):
         self.nome = nome
@@ -44,7 +46,7 @@ class PlanoMensal(Plano):
         return self.mensalidade
     
     def vencimento(self):
-        dia, mes, ano = list(map(int, self.data_vencimento.split('/')))
+        ano, mes, dia = list(map(int, self.data_vencimento.split('-')))
         if(mes == 12):
             mes = 1
             ano += 1
@@ -64,7 +66,7 @@ class PlanoTrimestral(Plano):
         return self.mensalidade * 0.9
 
     def vencimento(self):
-        dia, mes, ano = list(map(int, self.data_vencimento.split('/')))
+        ano, mes, dia = list(map(int, self.data_vencimento.split('-')))
         if(mes > 9):
             mes -= 9
             ano += 1
@@ -84,7 +86,7 @@ class PlanoSemestral(Plano):
         return self.mensalidade * 0.85
 
     def vencimento(self):
-        dia, mes, ano = list(map(int, self.data_vencimento.split('/')))
+        ano, mes, dia = list(map(int, self.data_vencimento.split('-')))
         if(mes > 6):
             mes -= 6
             ano += 1
@@ -104,7 +106,7 @@ class PlanoAnual(Plano):
         return self.mensalidade * 0.8
 
     def vencimento(self):
-        dia, mes, ano = list(map(int, self.data_vencimento.split('/')))
+        ano, mes, dia = list(map(int, self.data_vencimento.split('-')))
         ano += 1
             
         return f'{dia}/{mes}/{ano}'
@@ -118,7 +120,7 @@ def verifica_plano(x):
 
 clientes = {}
 mensalidade = 200
-dia = input('Digite o dia de hoje (dd/mm/aaaa): ')
+data = datetime.now(ZoneInfo("America/Sao_Paulo")).date()
 
 while(True):
     print('\n-xxxxxxxxxxxxxxxxxxxxxx- Sistema Academia POO (Performance Orientada a Objetivos)  -xxxxxxxxxxxxxxxxxxxxxx-')
