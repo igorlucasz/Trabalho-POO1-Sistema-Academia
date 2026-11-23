@@ -141,16 +141,16 @@ while(True):
             plano = verifica_plano(input('plano (mensal, trimestral, semestral, anual): '))
 
             if(plano == 'm' or plano == 'mensal'):
-                plano = PlanoMensal(mensalidade, dia)
+                plano = PlanoMensal(mensalidade, data)
 
             elif(plano == 't' or plano == 'trimestral'):
-                plano = PlanoTrimestral(mensalidade, dia)
+                plano = PlanoTrimestral(mensalidade, data)
             
             elif(plano == 's' or plano == 'semestral'):
-                plano = PlanoSemestral(mensalidade, dia)
+                plano = PlanoSemestral(mensalidade, data)
             
             else:
-                plano = PlanoAnual(mensalidade, dia)
+                plano = PlanoAnual(mensalidade, data)
 
             clientes[cpf] = Aluno(nome, cpf, plano)
 
