@@ -1,5 +1,6 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import time
 
 class Aluno:
     def __init__(self, nome, cpf, plano, treino_inicial):
