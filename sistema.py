@@ -133,14 +133,14 @@ mensalidade = 200
 data = str(datetime.now(ZoneInfo("America/Sao_Paulo")).date())
 
 while(True):
-    print('\n-xxxxxxxxxxxxxxxxxxxxxx- Sistema Academia POO (Performance Orientada a Objetivos)  -xxxxxxxxxxxxxxxxxxxxxx-')
+    print('\n------------------------ Sistema Academia POO (Performance Orientada a Objetivos)  ------------------------')
 
     print('\nOpções:')
     print('1) Registrar aluno')
     print('2) Editar planilha de treino')
     print('3) Verificar aluno')
     print('4) Alterar valor padrão da mensalidade')
-
+    print('5) Sair do sistema')
     opcao = input('\nDigite a opção desejada: ')
 
     match opcao:
@@ -186,6 +186,9 @@ while(True):
 
         case '4':
             print('\n')
+
+        case '5':
+            print('\nDesligando sistema')
+
         case _:
-            print('\nDesligando sistema\n')
-            break
+            opcao = input('\nOpção inválida! Tente novamente: ')
