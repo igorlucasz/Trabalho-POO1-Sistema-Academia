@@ -2,19 +2,22 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 class Aluno:
-    def __init__(self, nome, cpf, plano):
+    def __init__(self, nome, cpf, plano, treino_inicial):
         self.nome = nome
         self.cpf = cpf
         self.plano = plano
-        self.ficha = FichaDeTreino()
+        self.ficha = FichaDeTreino(treino_inicial)
 
     def get_nome(self):
         return self.nome
 
 class FichaDeTreino:
-    def __init__(self):
-    
-        self.exercicios = []
+    def __init__(self, treino_inicial):
+        if(not treino_inicial.strip()):
+            self.exercicios = []
+
+        else:
+            self.exercicios = treino_inicial.split(',')
     
     def ficha_treino(self):
         return self.exercicios
@@ -120,7 +123,7 @@ def verifica_plano(x):
         return x
 
 def verifica_cpf(x):
-    if(x.isdigit()):
+    if(x.isdigit() and len(x) == 11):
         return int(x)
 
     else:
@@ -146,9 +149,10 @@ while(True):
     match opcao:
         case '1':
             print('\nDigite as informações necessárias')
-            nome = input('\nnome: ')
+            nome = input('\nNome: ')
             cpf = verifica_cpf(input('CPF: '))
-            plano = verifica_plano(input('plano (mensal, trimestral, semestral, anual): ').lower())
+            plano = verifica_plano(input('Plano (mensal, trimestral, semestral, anual): ').lower())
+            treino_inicial = input('Treino inicial do aluno (se houver), separado por vírgulas: ')
 
             if(plano == 'm' or plano == 'mensal'):
                 plano = PlanoMensal(mensalidade, data)
@@ -162,7 +166,7 @@ while(True):
             else:
                 plano = PlanoAnual(mensalidade, data)
 
-            clientes[cpf] = Aluno(nome, cpf, plano)
+            clientes[cpf] = Aluno(nome, cpf, plano, treino_inicial)
 
             print('\nAluno registrado!')
 
@@ -189,6 +193,7 @@ while(True):
 
         case '5':
             print('\nDesligando sistema')
+            break
 
         case _:
-            opcao = input('\nOpção inválida! Tente novamente: ')
+            print('\nOpção inválida!')
