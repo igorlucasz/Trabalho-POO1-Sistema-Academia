@@ -1,6 +1,5 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import time
 
 class Aluno:
     def __init__(self, nome, cpf, plano, treino_inicial):
@@ -131,6 +130,13 @@ def verifica_cpf(x):
         nova_resposta = input('CPF inválido! Digite novamente: ')
         return verifica_cpf(nova_resposta)
 
+def verifica_cadastro(x,dic):
+    if(x in dic):
+        return False
+
+    else:
+        return True
+
 
 clientes = {}
 mensalidade = 200
@@ -143,8 +149,7 @@ while(True):
     print('1) Registrar aluno')
     print('2) Editar planilha de treino')
     print('3) Verificar aluno')
-    print('4) Alterar valor padrão da mensalidade')
-    print('5) Sair do sistema')
+    print('4) Sair do sistema')
     opcao = input('\nDigite a opção desejada: ')
 
     match opcao:
@@ -152,6 +157,9 @@ while(True):
             print('\nDigite as informações necessárias')
             nome = input('\nNome: ')
             cpf = verifica_cpf(input('CPF: '))
+            if(verifica_cadastro(cpf, clientes) == False):
+                print('\nAluno já cadastrado')
+                continue
             plano = verifica_plano(input('Plano (mensal, trimestral, semestral, anual): ').lower())
             treino_inicial = input('Treino inicial do aluno (se houver), separado por vírgulas: ')
 
@@ -174,6 +182,22 @@ while(True):
         case '2':
             print('\nEdição da Planilha de Treino')
             busca = verifica_cpf(input('Digite o CPF do aluno selecionado: '))
+            cliente = clientes.get(busca,'erro')
+
+            if(cliente != 'erro'):
+                print(f'Ficha de treino do aluno: {cliente.ficha.ficha_treino()}')
+                adicionar = int(input('Quantos exercícios deseja adicionar: '))
+
+                for i in range(adicionar):
+                    cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
+
+                remover = int(input('Quantos exercícios deseja remover: '))
+
+                for i in range(remover):
+                    print('') #faz ai DAVI VACILÃO
+
+            else:
+                print('\nAluno não cadastrado.')
             
         case '3':
             print('\nBusca de informações do aluno por CPF')
@@ -190,12 +214,8 @@ while(True):
                 print('\nAluno não cadastrado.')
 
         case '4':
-            print('\n')
-
-        case '5':
             print('\nDesligando sistema')
             break
 
         case _:
             print('\nOpção inválida!')
-            time.sleep(1.5)
