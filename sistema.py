@@ -1,5 +1,6 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import time
 
 class Aluno:
     def __init__(self, nome, cpf, plano, treino_inicial):
@@ -26,7 +27,7 @@ class FichaDeTreino:
         self.exercicios.append(exercicio)
 
     def remover_exercicio(self, exercicio):
-        self.exercicios.remove(exercicio)
+        self.exercicios.pop(exercicio)
 
 class Plano:
     def __init__(self, mensalidade, data_vencimento):
@@ -190,14 +191,21 @@ while(True):
 
                 for i in range(adicionar):
                     cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
-
+                print('--- FICHA DE TREINO ---')
+                for i in range(len(cliente.ficha.ficha_treino())):
+                    print(f'[{i}] {cliente.ficha.ficha_treino()[i]}')
                 remover = int(input('Quantos exercícios deseja remover: '))
+                while remover > len(cliente.ficha.ficha_treino()):
+                    remover = int(input('Quantidade inválida. Insira quantos exercícios deseja remover: '))
+                if remover > 0:
+                    indices_exercicios = list(map(int, input("Insira o índice dos números que você deseja remover:").split()))
+                    indices_exercicios.sort(reverse = True)
+                    for i in indices_exercicios:
+                        cliente.ficha.remover_exercicio(i)
 
-                for i in range(remover):
-                    print('') #faz ai DAVI VACILÃO
-
+                print(f'Ficha de treino do aluno atualizada: {cliente.ficha.ficha_treino()}')    
             else:
-                print('\nAluno não cadastrado.')
+                print('\nCPF não cadastrado.')
             
         case '3':
             print('\nBusca de informações do aluno por CPF')
@@ -211,7 +219,7 @@ while(True):
                 print(f'Ficha de treino: {cliente.ficha.ficha_treino()}')
 
             else:
-                print('\nAluno não cadastrado.')
+                print('\nCPF não cadastrado.')
 
         case '4':
             print('\nDesligando sistema')
@@ -219,3 +227,4 @@ while(True):
 
         case _:
             print('\nOpção inválida!')
+            time.sleep(1.5)
