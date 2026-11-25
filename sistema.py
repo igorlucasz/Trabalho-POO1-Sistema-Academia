@@ -171,16 +171,16 @@ def verifica_indices(indices):
             num = False
             break
     if num == True:
-        indices = list(map(int, indices))
         if len(indices) != remover:
             indices = list(map(int, verifica_indices(input("Quantia de índices incorreta, tente novamente: ").replace(" ", "").split(','))))
+        indices = list(map(int, indices))
         for indice in indices:
             if not (0 < indice <= len(cliente.ficha.exercicios)):
                 indices = list(map(int, verifica_indices(input("Índices inválidos, tente novamente: ").replace(" ", "").split(','))))
                 break
     else:
         indices = verifica_indices(input("Índices só podem ser números positivos, tente novamente: ").replace(" ", "").split(','))  
-    return indices
+    return list(map(int, indices))
 
 clientes = {}
 mensalidade = 200
@@ -237,16 +237,13 @@ while(True):
                 time.sleep(1.5)
 
                 adicionar = int(verifica_inteiro(input('Insira quantos exercícios deseja adicionar: ')))
-                if adicionar > 0:
-                    for i in range(adicionar):
-                                        cliente.ficha.adicionar_exercicio(input(f'Digite o {i + 1}° exercício que deseja adicionar: '))
-                    consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
-                    time.sleep(1)
-                elif adicionar < 0:
-                    adicionar = int(verifica_inteiro(input('Valor inválido. Insira quantos exercícios deseja adicionar: ')))
+                for i in range(adicionar):
+                                    cliente.ficha.adicionar_exercicio(input(f'Digite o {i + 1}° exercício que deseja adicionar: '))
+                consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
+                time.sleep(1)
                 
                 remover = int(verifica_inteiro(input('Quantos exercícios deseja remover: ')))
-                while remover > len(cliente.ficha.ficha_treino()) or remover < 0:
+                while remover > len(cliente.ficha.ficha_treino()):
                     remover = int(verifica_inteiro(input('Quantidade inválida. Insira quantos exercícios deseja remover: ')))
                 if remover > 0:
                     indices_exercicios = verifica_indices(input("Insira o índice dos números que você deseja remover: ").replace(" ", "").split(','))
