@@ -226,7 +226,7 @@ while(True):
                 plano = PlanoAnual(mensalidade, data)
 
             clientes[cpf] = Aluno(nome, cpf, plano, treino_inicial)
-            faturamanto += clientes[cpf].plano.calcular_mensalidade()
+            faturamento += clientes[cpf].plano.calcular_mensalidade()
 
             print('\nAluno registrado!')
             time.sleep(1.5)
