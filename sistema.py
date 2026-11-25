@@ -173,13 +173,13 @@ def verifica_indices(indices):
     if num == True:
         indices = list(map(int, indices))
         if len(indices) != remover:
-            indices = verifica_indices(input("Quantia de índices incorreta, tente novamente: ").replace(" ", "").split(','))
+            indices = list(map(int, verifica_indices(input("Quantia de índices incorreta, tente novamente: ").replace(" ", "").split(','))))
         for indice in indices:
             if not (0 < indice <= len(cliente.ficha.exercicios)):
-                indices = verifica_indices(input("Índices inválidos, tente novamente: ").replace(" ", "").split(','))
+                indices = list(map(int, verifica_indices(input("Índices inválidos, tente novamente: ").replace(" ", "").split(','))))
                 break
     else:
-        indices = verifica_indices(input("Índices só podem ser números, tente novamente: ").replace(" ", "").split(','))  
+        indices = verifica_indices(input("Índices só podem ser números positivos, tente novamente: ").replace(" ", "").split(','))  
     return indices
 
 clientes = {}
