@@ -138,7 +138,7 @@ def verifica_plano(x):
 
 def verifica_cpf(x):
     if(x.isdigit() and len(x) == 11):
-        return int(x)
+        return x
 
     else:
         nova_resposta = input('CPF inválido! Digite novamente: ')
@@ -153,19 +153,15 @@ def verifica_cadastro(x,dic):
 
 def consulta_ficha_de_treino(x,string):
     lista = x.ficha.ficha_treino()
-    tamanho = len(lista) - 1
-    print(f'{string}', end = '') 
+    tamanho = len(lista)
+    print(f'\n{string}') 
 
     if(tamanho == 0):
-        print(f'{lista[0]}.')
-
-    elif(tamanho == -1):
         print(f'não adicionado.')
 
     else:
         for i in range(tamanho):
-            print(f'{lista[i]}', end = ', ')
-        print(f'{lista[tamanho]}.')
+            print(f'[{i}] {lista[i]}')
 
 clientes = {}
 mensalidade = 200
