@@ -161,7 +161,7 @@ def consulta_ficha_de_treino(x,string):
 
     else:
         for i in range(tamanho):
-            print(f'[{i}] {lista[i]}')
+            print(f'[{i + 1}] {lista[i]}')
 
 def verifica_indices(indices):
     if len(indices) != remover:
