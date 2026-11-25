@@ -193,6 +193,7 @@ while(True):
             cpf = verifica_cpf(input('CPF: '))
             if(verifica_cadastro(cpf, clientes) == False):
                 print('\nAluno já cadastrado')
+                time.sleep(1.5)
                 continue
             plano = verifica_plano(input('Plano (mensal, trimestral, semestral, anual): '))
             treino_inicial = input('Treino inicial do aluno (se houver), separado por vírgulas: ')
@@ -212,6 +213,7 @@ while(True):
             clientes[cpf] = Aluno(nome, cpf, plano, treino_inicial)
 
             print('\nAluno registrado!')
+            time.sleep(1.5)
 
         case '2':
             print('\nEdição da Planilha de Treino')
@@ -228,7 +230,7 @@ while(True):
                     cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
                 consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
 
-                time.sleep(1.5)
+                time.sleep(1)
                 
                 remover = int(input('Quantos exercícios deseja remover: '))
                 while remover > len(cliente.ficha.ficha_treino()):
