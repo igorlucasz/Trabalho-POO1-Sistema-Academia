@@ -196,7 +196,7 @@ while(True):
     print('2) Editar planilha de treino')
     print('3) Verificar aluno')
     print('4) Verificar faturamento')
-    print('5) Excluir Aluno')
+    print('5) Desmatricular aluno')
     print('6) Desligar sistema')
     opcao = input('\nDigite a opção desejada: ')
 
@@ -207,7 +207,7 @@ while(True):
             nome = input('\nNome: ').title()
             cpf = verifica_cpf(input('CPF: '))
             if(verifica_cadastro(cpf, clientes) == False):
-                print('\nAluno já cadastrado')
+                print('\nCPF já cadastrado')
                 time.sleep(1.5)
                 continue
             plano = verifica_plano(input('Plano (mensal, trimestral, semestral, anual): '))
@@ -263,7 +263,7 @@ while(True):
             else:
                 print('\nCPF não cadastrado.')
                 time.sleep(1.5)
-            
+        
         case '3':
             print('\nBusca de informações do aluno por CPF')
             busca = verifica_cpf(input('Digite o CPF do aluno: '))
@@ -282,12 +282,20 @@ while(True):
                 time.sleep(1.5)
 
         case '4':
-            print(f'\nFaturamento mensal atual: R${faturamento}:.2f')
+            print(f'\nFaturamento mensal atual: R${faturamento:.2f}')
+
+        case '5':
+            print('\nExcluindo aluno')
+            cliente = verifica_cpf(input('Insira o CPF do aluno que você deseja desmatricular do sistema: '))
+            faturamento -= cliente.plano.calcular_mensalidade()
+            clientes.remove(cliente)
+            print('Cliente removido com sucesso!')
+            print(f'Faturamento atualizado: R$ {faturamento:.2f}')
 
         case '6':
             print('\nDesligando sistema\n')
             break
-
+        
         case _:
             print('\nOpção inválida!')
             time.sleep(1.5)
