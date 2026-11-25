@@ -170,7 +170,7 @@ def verifica_indices(indices):
         else:
             num = False
             break
-    if len(indices) != set(indices):
+    if len(indices) != len(set(indices)):
         indices = list(map(int, verifica_indices(input("Índices repetidos! Tente novamente: ").replace(" ", "").split(',')))) 
     if num == True:
         if len(indices) != remover:
