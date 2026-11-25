@@ -30,8 +30,8 @@ class FichaDeTreino:
     def adicionar_exercicio(self, exercicio):
         self.exercicios.append(exercicio.strip())
 
-    def remover_exercicio(self, exercicio):
-        self.exercicios.pop(exercicio.strip())
+    def remover_exercicio(self, indice_exercicio):
+        self.exercicios.pop(indice_exercicio)
 
 class Plano:
     def __init__(self, mensalidade, data_vencimento):
