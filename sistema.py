@@ -236,12 +236,14 @@ while(True):
 
                 time.sleep(1.5)
 
-                adicionar = int(input('Quantos exercícios deseja adicionar: '))
-                for i in range(adicionar):
-                    cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
+                adicionar = int(verifica_inteiro(input('Insira quantos exercícios deseja adicionar: ')))
                 if adicionar > 0:
+                    for i in range(adicionar):
+                                        cliente.ficha.adicionar_exercicio(input(f'Digite o {i + 1}° exercício que deseja adicionar: '))
                     consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
                     time.sleep(1)
+                elif adicionar < 0:
+                    adicionar = int(verifica_inteiro(input('Valor inválido. Insira quantos exercícios deseja adicionar: ')))
                 
                 remover = int(verifica_inteiro(input('Quantos exercícios deseja remover: ')))
                 while remover > len(cliente.ficha.ficha_treino()) or remover < 0:
