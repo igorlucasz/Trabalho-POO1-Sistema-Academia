@@ -13,20 +13,24 @@ class Aluno:
 
 class FichaDeTreino:
     def __init__(self, treino_inicial):
-        if(not treino_inicial.strip()):
+        treino_inicial = treino_inicial.strip().lower()
+        if(not treino_inicial):
             self.exercicios = []
 
         else:
             self.exercicios = treino_inicial.split(',')
+
+            for i in range(len(self.exercicios)):
+                self.exercicios[i] = self.exercicios[i].strip()
     
     def ficha_treino(self):
         return self.exercicios
 
     def adicionar_exercicio(self, exercicio):
-        self.exercicios.append(exercicio)
+        self.exercicios.append(exercicio.strip())
 
     def remover_exercicio(self, exercicio):
-        self.exercicios.remove(exercicio)
+        self.exercicios.remove(exercicio.strip())
 
 class Plano:
     def __init__(self, mensalidade, data_vencimento):
@@ -115,10 +119,19 @@ class PlanoAnual(Plano):
             
         return f'{dia}/{mes}/{ano}'
  
+def verifica_inteiro(x): #verificação de números INTEIROS
+    if(x.isdigit()):
+        return x
+
+    else:
+        nova_resposta = input('Valor inválido! Digite um número válido: ')
+        return verifica_inteiro(nova_resposta)
+
 def verifica_plano(x):
+    x = x.lower()
     if(x != 'm' and x != 'mensal' and x != 't' and x != 'trimestral' and x != 's' and x != 'semestral' and x != 'a' and x != 'anual'):
         nova_resposta = input('Plano inválido! Digite novamente: ')
-        verifica_plano(nova_resposta)
+        return verifica_plano(nova_resposta)
     else:
         return x
 
@@ -137,10 +150,24 @@ def verifica_cadastro(x,dic):
     else:
         return True
 
+def consulta_ficha_de_treino(x):
+    lista = x.ficha.ficha_treino()
+    tamanho = len(lista) - 1
+    print('Treino atual do aluno: ', end = '') 
+
+    if(tamanho == 0):
+        print(f'{lista[0]}.')
+
+    elif(tamanho == -1):
+        print(f'não adicionado.')
+
+    else:
+        for i in range(tamanho):
+            print(f'{lista[i]}', end = ', ')
+        print(f'{lista[tamanho]}.')
 
 clientes = {}
 mensalidade = 200
-data = str(datetime.now(ZoneInfo("America/Sao_Paulo")).date())
 
 while(True):
     print('\n------------------------ Sistema Academia POO (Performance Orientada a Objetivos)  ------------------------')
@@ -149,18 +176,19 @@ while(True):
     print('1) Registrar aluno')
     print('2) Editar planilha de treino')
     print('3) Verificar aluno')
-    print('4) Sair do sistema')
+    print('4) Desligar sistema')
     opcao = input('\nDigite a opção desejada: ')
 
     match opcao:
         case '1':
             print('\nDigite as informações necessárias')
+            data = str(datetime.now(ZoneInfo("America/Sao_Paulo")).date())
             nome = input('\nNome: ')
             cpf = verifica_cpf(input('CPF: '))
             if(verifica_cadastro(cpf, clientes) == False):
                 print('\nAluno já cadastrado')
                 continue
-            plano = verifica_plano(input('Plano (mensal, trimestral, semestral, anual): ').lower())
+            plano = verifica_plano(input('Plano (mensal, trimestral, semestral, anual): '))
             treino_inicial = input('Treino inicial do aluno (se houver), separado por vírgulas: ')
 
             if(plano == 'm' or plano == 'mensal'):
@@ -185,13 +213,13 @@ while(True):
             cliente = clientes.get(busca,'erro')
 
             if(cliente != 'erro'):
-                print(f'Ficha de treino do aluno: {cliente.ficha.ficha_treino()}')
-                adicionar = int(input('Quantos exercícios deseja adicionar: '))
+                consulta_ficha_de_treino(cliente)
+                adicionar = int(verifica_inteiro(input('Quantos exercícios deseja adicionar: ')))
 
                 for i in range(adicionar):
                     cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
 
-                remover = int(input('Quantos exercícios deseja remover: '))
+                remover = int(verifica_inteiro(input('Quantos exercícios deseja remover: ')))
 
                 for i in range(remover):
                     print('') #faz ai DAVI VACILÃO
