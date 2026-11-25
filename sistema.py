@@ -1,5 +1,6 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
+import time
 
 class Aluno:
     def __init__(self, nome, cpf, plano, treino_inicial):
@@ -30,7 +31,7 @@ class FichaDeTreino:
         self.exercicios.append(exercicio.strip())
 
     def remover_exercicio(self, exercicio):
-        self.exercicios.remove(exercicio.strip())
+        self.exercicios.pop(exercicio.strip())
 
 class Plano:
     def __init__(self, mensalidade, data_vencimento):
@@ -150,10 +151,10 @@ def verifica_cadastro(x,dic):
     else:
         return True
 
-def consulta_ficha_de_treino(x):
+def consulta_ficha_de_treino(x,string):
     lista = x.ficha.ficha_treino()
     tamanho = len(lista) - 1
-    print('Treino atual do aluno: ', end = '') 
+    print(f'{string}', end = '') 
 
     if(tamanho == 0):
         print(f'{lista[0]}.')
@@ -213,19 +214,25 @@ while(True):
             cliente = clientes.get(busca,'erro')
 
             if(cliente != 'erro'):
-                consulta_ficha_de_treino(cliente)
-                adicionar = int(verifica_inteiro(input('Quantos exercícios deseja adicionar: ')))
+                consulta_ficha_de_treino(cliente,'Ficha de Treino Atual: ')
 
+                adicionar = int(input('Quantos exercícios deseja adicionar: '))
                 for i in range(adicionar):
                     cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
-
-                remover = int(verifica_inteiro(input('Quantos exercícios deseja remover: ')))
-
-                for i in range(remover):
-                    print('') #faz ai DAVI VACILÃO
-
+                consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
+                
+                remover = int(input('Quantos exercícios deseja remover: '))
+                while remover > len(cliente.ficha.ficha_treino()):
+                    remover = int(input('Quantidade inválida. Insira quantos exercícios deseja remover: '))
+                if remover > 0:
+                    indices_exercicios = list(map(int, input("Insira o índice dos números que você deseja remover: ").split()))
+                    indices_exercicios.sort(reverse = True)
+                    for i in indices_exercicios:
+                        cliente.ficha.remover_exercicio(i)
+                consulta_ficha_de_treino(cliente, 'Ficha de Treino Atualizada')
+                
             else:
-                print('\nAluno não cadastrado.')
+                print('\nCPF não cadastrado.')
             
         case '3':
             print('\nBusca de informações do aluno por CPF')
@@ -239,7 +246,7 @@ while(True):
                 print(f'Ficha de treino: {cliente.ficha.ficha_treino()}')
 
             else:
-                print('\nAluno não cadastrado.')
+                print('\nCPF não cadastrado.')
 
         case '4':
             print('\nDesligando sistema')
@@ -247,3 +254,4 @@ while(True):
 
         case _:
             print('\nOpção inválida!')
+            time.sleep(1.5)
