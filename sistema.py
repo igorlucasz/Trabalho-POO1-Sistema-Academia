@@ -291,7 +291,7 @@ while(True):
             cliente = clientes.get(busca, 'erro')
             if(cliente != 'erro'):
                 faturamento -= cliente.plano.calcular_mensalidade()
-                clientes.pop(cliente)
+                clientes.pop(busca)
                 print('Cliente removido com sucesso!')
                 print(f'Faturamento atualizado: R$ {faturamento:.2f}')
                 time.sleep(1.5)
