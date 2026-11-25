@@ -163,6 +163,15 @@ def consulta_ficha_de_treino(x,string):
         for i in range(tamanho):
             print(f'[{i}] {lista[i]}')
 
+def verifica_indices(indices):
+    if len(indices) != remover:
+        indices = verifica_indices(list(map(int, input("Quantia de índices incorreta, tente novamente: ").split(','))))
+    for indice in indices:
+        if not (0 <= indice < len(cliente.ficha.exercicios)):
+            indices = verifica_indices(list(map(int, input("Índices inválidos, tente novamente: ").split(','))))
+            break
+    return indices
+
 clientes = {}
 mensalidade = 200
 
@@ -221,10 +230,10 @@ while(True):
                 while remover > len(cliente.ficha.ficha_treino()):
                     remover = int(input('Quantidade inválida. Insira quantos exercícios deseja remover: '))
                 if remover > 0:
-                    indices_exercicios = list(map(int, input("Insira o índice dos números que você deseja remover: ").split()))
+                    indices_exercicios = verifica_indices(list(map(int, input("Insira o índice dos números que você deseja remover: ").split(','))))
                     indices_exercicios.sort(reverse = True)
                     for i in indices_exercicios:
-                        cliente.ficha.remover_exercicio(i)
+                        cliente.ficha.remover_exercicio(i - 1)
                 consulta_ficha_de_treino(cliente, 'Ficha de Treino Atualizada')
                 
             else:
