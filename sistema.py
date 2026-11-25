@@ -283,14 +283,21 @@ while(True):
 
         case '4':
             print(f'\nFaturamento mensal atual: R${faturamento:.2f}')
+            time.sleep(1.5)
 
         case '5':
             print('\nExcluindo aluno')
-            cliente = verifica_cpf(input('Insira o CPF do aluno que você deseja desmatricular do sistema: '))
-            faturamento -= cliente.plano.calcular_mensalidade()
-            clientes.remove(cliente)
-            print('Cliente removido com sucesso!')
-            print(f'Faturamento atualizado: R$ {faturamento:.2f}')
+            busca = verifica_cpf(input('Insira o CPF do aluno que você deseja desmatricular do sistema: '))
+            cliente = clientes.get(busca, 'erro')
+            if(cliente != 'erro'):
+                faturamento -= cliente.plano.calcular_mensalidade()
+                clientes.pop(cliente)
+                print('Cliente removido com sucesso!')
+                print(f'Faturamento atualizado: R$ {faturamento:.2f}')
+                time.sleep(1.5)
+            else:
+                print('\nCPF não cadastrado.')
+                time.sleep(1.5)
 
         case '6':
             print('\nDesligando sistema\n')
