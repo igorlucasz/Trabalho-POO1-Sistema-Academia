@@ -164,12 +164,22 @@ def consulta_ficha_de_treino(x,string):
             print(f'[{i + 1}] {lista[i]}')
 
 def verifica_indices(indices):
-    if len(indices) != remover:
-        indices = verifica_indices(list(map(int, input("Quantia de índices incorreta, tente novamente: ").split(','))))
-    for indice in indices:
-        if not (0 < indice <= len(cliente.ficha.exercicios)):
-            indices = verifica_indices(list(map(int, input("Índices inválidos, tente novamente: ").split(','))))
+    for i in indices:
+        if(i.isdigit()):
+            num = True
+        else:
+            num = False
             break
+    if num == True:
+        indices = list(map(int, indices))
+        if len(indices) != remover:
+            indices = verifica_indices(input("Quantia de índices incorreta, tente novamente: ").replace(" ", "").split(','))
+        for indice in indices:
+            if not (0 < indice <= len(cliente.ficha.exercicios)):
+                indices = verifica_indices(input("Índices inválidos, tente novamente: ").replace(" ", "").split(','))
+                break
+    else:
+        indices = verifica_indices(input("Índices só podem ser números, tente novamente: ").replace(" ", "").split(','))  
     return indices
 
 clientes = {}
@@ -233,11 +243,11 @@ while(True):
                     consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
                     time.sleep(1)
                 
-                remover = int(input('Quantos exercícios deseja remover: '))
+                remover = int(verifica_inteiro(input('Quantos exercícios deseja remover: ')))
                 while remover > len(cliente.ficha.ficha_treino()) or remover < 0:
-                    remover = int(input('Quantidade inválida. Insira quantos exercícios deseja remover: '))
+                    remover = int(verifica_inteiro(input('Quantidade inválida. Insira quantos exercícios deseja remover: ')))
                 if remover > 0:
-                    indices_exercicios = verifica_indices(list(map(int, input("Insira o índice dos números que você deseja remover: ").split(','))))
+                    indices_exercicios = verifica_indices(input("Insira o índice dos números que você deseja remover: ").replace(" ", "").split(','))
                     indices_exercicios.sort(reverse = True)
                     for i in indices_exercicios:
                         cliente.ficha.remover_exercicio(i - 1)
@@ -257,6 +267,7 @@ while(True):
             if(cliente != 'erro'):
                 print(f'\nNome: {cliente.get_nome()}')
                 print(f'Plano: {cliente.plano.get_plano()}')
+                print(f'Mensalidade: R$ {cliente.plano.calcular_mensalidade():.2f}')
                 print(f'Data de vencimento do plano: {cliente.plano.vencimento()}', end = '')
                 consulta_ficha_de_treino(cliente, f'Ficha de Treino - {cliente.get_nome()}')
                 time.sleep(4)
