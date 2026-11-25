@@ -237,7 +237,7 @@ while(True):
                     indices_exercicios = verifica_indices(list(map(int, input("Insira o índice dos números que você deseja remover: ").split(','))))
                     indices_exercicios.sort(reverse = True)
                     for i in indices_exercicios:
-                        cliente.ficha.remover_exercicio(i)
+                        cliente.ficha.remover_exercicio(i - 1)
                 consulta_ficha_de_treino(cliente, 'Ficha de Treino Atualizada')
                 
             else:
