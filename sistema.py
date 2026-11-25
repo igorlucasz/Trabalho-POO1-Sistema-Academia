@@ -221,10 +221,14 @@ while(True):
             if(cliente != 'erro'):
                 consulta_ficha_de_treino(cliente,'Ficha de Treino Atual: ')
 
+                time.sleep(1.5)
+
                 adicionar = int(input('Quantos exercícios deseja adicionar: '))
                 for i in range(adicionar):
                     cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
                 consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
+
+                time.sleep(1.5)
                 
                 remover = int(input('Quantos exercícios deseja remover: '))
                 while remover > len(cliente.ficha.ficha_treino()):
@@ -235,9 +239,12 @@ while(True):
                     for i in indices_exercicios:
                         cliente.ficha.remover_exercicio(i - 1)
                 consulta_ficha_de_treino(cliente, 'Ficha de Treino Atualizada')
-                
+
+                time.sleep(1.5)
+
             else:
                 print('\nCPF não cadastrado.')
+                time.sleep(1.5)
             
         case '3':
             print('\nBusca de informações do aluno por CPF')
@@ -247,14 +254,14 @@ while(True):
             if(cliente != 'erro'):
                 print(f'\nNome: {cliente.get_nome()}')
                 print(f'Plano: {cliente.plano.get_plano()}')
-                print(f'Data de vencimento do plano: {cliente.plano.vencimento()}')
-                print(f'Ficha de treino: {cliente.ficha.ficha_treino()}')
+                print(f'Data de vencimento do plano: {cliente.plano.vencimento()}', end = '')
+                consulta_ficha_de_treino(cliente, f'Ficha de Treino d@ {cliente.get_nome()}')
 
             else:
                 print('\nCPF não cadastrado.')
 
         case '4':
-            print('\nDesligando sistema')
+            print('\nDesligando sistema\n')
             break
 
         case _:
