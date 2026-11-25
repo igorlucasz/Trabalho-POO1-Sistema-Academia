@@ -186,6 +186,7 @@ def verifica_indices(indices):
 
 clientes = {}
 mensalidade = 200
+faturamento = 0
 
 while(True):
     print('\n------------------------ Sistema Academia POO (Performance Orientada a Objetivos)  ------------------------')
@@ -194,7 +195,9 @@ while(True):
     print('1) Registrar aluno')
     print('2) Editar planilha de treino')
     print('3) Verificar aluno')
-    print('4) Desligar sistema')
+    print('4) Verificar faturamento')
+    print('5) Excluir Aluno')
+    print('6) Desligar sistema')
     opcao = input('\nDigite a opção desejada: ')
 
     match opcao:
@@ -223,6 +226,7 @@ while(True):
                 plano = PlanoAnual(mensalidade, data)
 
             clientes[cpf] = Aluno(nome, cpf, plano, treino_inicial)
+            faturamanto += clientes[cpf].plano.calcular_mensalidade()
 
             print('\nAluno registrado!')
             time.sleep(1.5)
@@ -278,6 +282,9 @@ while(True):
                 time.sleep(1.5)
 
         case '4':
+            print(f'\nFaturamento mensal atual: R${faturamento}:.2f')
+
+        case '6':
             print('\nDesligando sistema\n')
             break
 
