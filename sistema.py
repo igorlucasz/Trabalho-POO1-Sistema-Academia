@@ -22,13 +22,13 @@ class FichaDeTreino:
             self.exercicios = treino_inicial.split(',')
 
             for i in range(len(self.exercicios)):
-                self.exercicios[i] = self.exercicios[i].strip()
+                self.exercicios[i] = self.exercicios[i].strip().capitalize()
     
     def ficha_treino(self):
         return self.exercicios
 
     def adicionar_exercicio(self, exercicio):
-        self.exercicios.append(exercicio.strip())
+        self.exercicios.append(exercicio.strip().lower().capitalize())
 
     def remover_exercicio(self, indice_exercicio):
         self.exercicios.pop(indice_exercicio)
@@ -157,7 +157,7 @@ def consulta_ficha_de_treino(x,string):
     print(f'\n{string}') 
 
     if(tamanho == 0):
-        print(f'não adicionado.')
+        print(f'Não criada.\n')
 
     else:
         for i in range(tamanho):
@@ -167,7 +167,7 @@ def verifica_indices(indices):
     if len(indices) != remover:
         indices = verifica_indices(list(map(int, input("Quantia de índices incorreta, tente novamente: ").split(','))))
     for indice in indices:
-        if not (0 <= indice < len(cliente.ficha.exercicios)):
+        if not (0 < indice <= len(cliente.ficha.exercicios)):
             indices = verifica_indices(list(map(int, input("Índices inválidos, tente novamente: ").split(','))))
             break
     return indices
@@ -189,7 +189,7 @@ while(True):
         case '1':
             print('\nDigite as informações necessárias')
             data = str(datetime.now(ZoneInfo("America/Sao_Paulo")).date())
-            nome = input('\nNome: ')
+            nome = input('\nNome: ').title()
             cpf = verifica_cpf(input('CPF: '))
             if(verifica_cadastro(cpf, clientes) == False):
                 print('\nAluno já cadastrado')
@@ -221,6 +221,7 @@ while(True):
             cliente = clientes.get(busca,'erro')
 
             if(cliente != 'erro'):
+                print(f'\nAluno selecionado: {cliente.nome}')
                 consulta_ficha_de_treino(cliente,'Ficha de Treino Atual: ')
 
                 time.sleep(1.5)
@@ -228,19 +229,19 @@ while(True):
                 adicionar = int(input('Quantos exercícios deseja adicionar: '))
                 for i in range(adicionar):
                     cliente.ficha.adicionar_exercicio(input('Digite o exercício que deseja adicionar: '))
-                consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
-
-                time.sleep(1)
+                if adicionar > 0:
+                    consulta_ficha_de_treino(cliente,'Ficha de Treino Atualizada: ')
+                    time.sleep(1)
                 
                 remover = int(input('Quantos exercícios deseja remover: '))
-                while remover > len(cliente.ficha.ficha_treino()):
+                while remover > len(cliente.ficha.ficha_treino()) or remover < 0:
                     remover = int(input('Quantidade inválida. Insira quantos exercícios deseja remover: '))
                 if remover > 0:
                     indices_exercicios = verifica_indices(list(map(int, input("Insira o índice dos números que você deseja remover: ").split(','))))
                     indices_exercicios.sort(reverse = True)
                     for i in indices_exercicios:
                         cliente.ficha.remover_exercicio(i - 1)
-                consulta_ficha_de_treino(cliente, 'Ficha de Treino Atualizada')
+                consulta_ficha_de_treino(cliente, 'Ficha de Treino Atualizada: ')
 
                 time.sleep(1.5)
 
@@ -257,10 +258,12 @@ while(True):
                 print(f'\nNome: {cliente.get_nome()}')
                 print(f'Plano: {cliente.plano.get_plano()}')
                 print(f'Data de vencimento do plano: {cliente.plano.vencimento()}', end = '')
-                consulta_ficha_de_treino(cliente, f'Ficha de Treino d@ {cliente.get_nome()}')
+                consulta_ficha_de_treino(cliente, f'Ficha de Treino - {cliente.get_nome()}')
+                time.sleep(4)
 
             else:
                 print('\nCPF não cadastrado.')
+                time.sleep(1.5)
 
         case '4':
             print('\nDesligando sistema\n')
